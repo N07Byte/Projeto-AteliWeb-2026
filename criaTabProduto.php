@@ -1,11 +1,8 @@
 <?php
 
 $dbnome = "bd_ateliweb";
-
 $conexao = mysqli_connect('localhost', 'root', '') or die("Erro de conexão");
-
 $criadb = mysqli_query($conexao, "CREATE DATABASE IF NOT EXISTS $dbnome");
-
 $abre = mysqli_query($conexao, "USE $dbnome");
 
 $tbNome1 = "tbl_produto";
