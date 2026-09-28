@@ -6,18 +6,14 @@ $conexao = mysqli_connect('localhost', 'root', '') or die("Erro de conexão");
 mysqli_query($conexao, "CREATE DATABASE IF NOT EXISTS $dbnome");
 mysqli_query($conexao, "USE $dbnome");
 
-/*
- * Primeiro apaga-se a tabela FILHA. Ela possui uma FK apontando para tbl_compras.
- */
+/* Primeiro apaga-se a tabela FILHA. Ela possui uma FK apontando para tbl_compras */
 mysqli_query($conexao, "DROP TABLE IF EXISTS tbl_itens_compra");
 
-/*
- * Depois podemos apagar a tabela PAI.
- */
+/* Depois podemos apagar a tabela PAI */
 mysqli_query($conexao, "DROP TABLE IF EXISTS tbl_compras");
 
 
-/* CRIA tbl_compras*/
+/* Cria tbl_compras*/
 
 $sqlCompras = "CREATE TABLE tbl_compras (
     id INT AUTO_INCREMENT PRIMARY KEY,

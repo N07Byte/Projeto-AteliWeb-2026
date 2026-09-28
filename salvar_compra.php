@@ -70,10 +70,7 @@ try {
         throw new Exception('Erro ao preparar a compra: ' . mysqli_error($conexao));
     }
 
-    /*
-     * $itens continua sendo o JSON original recebido.
-     * Como a coluna do banco é JSON, o MySQL fará a validação.
-     */
+    /* * $itens continua sendo o JSON original recebido. Como a coluna do banco é JSON, o MySQL fará a validação */
     mysqli_stmt_bind_param($stmtCompra, "sssssd", $nome, $email, $telefone, $endereco, $itens, $total);
 
     if (!mysqli_stmt_execute($stmtCompra)) {
