@@ -4,8 +4,7 @@
     box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
     min-height: 100%;
 }
 
@@ -20,9 +19,7 @@ body {
     min-height: 100vh;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
     font-family: 'Playfair Display', serif;
     letter-spacing: 0.5px;
 }
@@ -175,8 +172,7 @@ label {
     color: #3f3f3f;
 }
 
-input,
-textarea {
+input, textarea {
     width: 100%;
     padding: 10px;
 
@@ -194,7 +190,7 @@ textarea:focus {
 }
 
 
-/* CONTATO */
+/* PÁGINA CONTATO */
 
 .contato-box {
     max-width: 600px;

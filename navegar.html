@@ -7,259 +7,248 @@
   <link rel="stylesheet" href="style.css">
   <title>Navegar Produtos</title>
 </head>
-
 <body>
+  <header>
+    <h1>
+      <a href="inicio.html"><img src="logo.png" alt="logotipo"></a>
+    </h1>
 
-<header>
-  <h1>
-    <a href="inicio.html">
-      <img src="logo.png" alt="logotipo">
-    </a>
-  </h1>
+    <nav>
+      <a href="navegar.html">Navegar</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+    <button id="toggle-cart-btn" onclick="toggleCart()">🛒</button>
+  </header>
 
-  <nav>
-    <a href="navegar.html">Navegar</a>
-    <a href="sobre.html">Sobre</a>
-    <a href="contato.html">Contato</a>
-  </nav>
-  <button id="toggle-cart-btn" onclick="toggleCart()">🛒</button>
-</header>
+  <section class="section">
+    <h2>Navegar Produtos</h2>
 
-<section class="section">
-  <h2>Navegar Produtos</h2>
+    <div class="pesquisa">
+      <input type="search" id="campo-pesquisa" placeholder="Pesquisar produtos" autocomplete="off">
+  </div>
 
-  <div class="pesquisa">
-    <input
-        type="search"
-        id="campo-pesquisa"
-        placeholder="Pesquisar produtos"
-        autocomplete="off"
-    >
-</div>
+  <p id="resultado-pesquisa"></p>
 
-<p id="resultado-pesquisa"></p>
+    <div class="produtos"></div>
+  </section>
 
-  <div class="produtos"></div>
-</section>
+  <div id="cart" class="cart">
+    <h2>Carrinho</h2>
+    <ul id="cart-items"></ul>
+    <p id="total">Total: R$ 0,00</p>
+    <button id="checkout-btn" class="btn" onclick="goToCheckout()">Finalizar compra</button>
+    <button class="btn" onclick="clearCart()">Limpar carrinho</button>
+  </div>
 
-<div id="cart" class="cart">
-  <h2>Carrinho</h2>
-  <ul id="cart-items"></ul>
-  <p id="total">Total: R$ 0,00</p>
-  <button id="checkout-btn" class="btn" onclick="goToCheckout()">Finalizar compra</button>
-  <button class="btn" onclick="clearCart()">Limpar carrinho</button>
-</div>
+  <div id="overlay" class="overlay" onclick="toggleCart()"></div>
 
-<div id="overlay" class="overlay" onclick="toggleCart()"></div>
-
-<script>
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-  function openCart() {
-    document.getElementById("cart").classList.add("toggle");
-    document.getElementById("overlay").classList.add("active");
-}
-
-  function toggleCart() {
-    const cartEl = document.getElementById("cart");
-    const overlay = document.getElementById("overlay");
-
-    cartEl.classList.toggle("toggle");
-    overlay.classList.toggle("active");
-  }
-
-  function saveCart() {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }
-
-  function formatPrice(price) {
-    return price.toFixed(2).replace(".", ",");
-  }
-
-  function addToCart(name, price, image) {
-    const existing = cart.find(item => item.name === name);
-
-    if (existing) {
-      existing.quantity++;
-    } else {
-      cart.push({ name, price, image, quantity: 1 });
-    }
-
-    saveCart();
-    renderCart();
-    openCart(); /* abre o carrinho automaticamente quando adicionar um item a ele*/
-  }
-
-  function increaseQty(index) {
-    cart[index].quantity++;
-    saveCart();
-    renderCart();
-  }
-
-  function decreaseQty(index) {
-    if (cart[index].quantity > 1) {
-      cart[index].quantity--;
-    } else {
-      cart.splice(index, 1);
-    }
-    saveCart();
-    renderCart();
-  }
-
-  function removeItem(index) {
-    cart.splice(index, 1);
-    saveCart();
-    renderCart();
-  }
-
-  function clearCart() {
-    cart = [];
-    saveCart();
-    renderCart();
-  }
-
-  function renderCart() {
-      const cartItems = document.getElementById("cart-items");
-      const totalEl = document.getElementById("total");
-
-      cartItems.innerHTML = "";
-      let total = 0;
-
-      cart.forEach((item, index) => {
-        const subtotal = item.price * item.quantity;
-        total += subtotal;
-
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <img src="${item.image}" class="item-img">
-      
-          <div class="item-info">
-            <span class="item-name">${item.name}</span>
-            <span class="item-price">R$ ${formatPrice(item.price)}</span>
-          </div>
-
-          <div class="item-controls">
-            <button onclick="decreaseQty(${index})">−</button>
-            <span>${item.quantity}</span>
-            <button onclick="increaseQty(${index})">+</button>
-          </div>
-
-          <div class="item-subtotal">
-            R$ ${formatPrice(subtotal)}
-          </div>
-
-          <button class="remove-btn" onclick="removeItem(${index})">✕</button>
-        `;
-        cartItems.appendChild(li);
-      });
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
     
-    /* mostrar ou esconder botão "Finalizar compra" */
-    const checkoutBtn = document.getElementById("checkout-btn");
-    if (cart.length > 0) {
-      checkoutBtn.style.display = "block";
-    } else {
-      checkoutBtn.style.display = "none";
-    }
-
-    totalEl.innerText = "Total: R$" + formatPrice(total);
+    function openCart() {
+      document.getElementById("cart").classList.add("toggle");
+      document.getElementById("overlay").classList.add("active");
   }
 
-  function goToCheckout() {
-    if (cart.length === 0) {
-      alert("Seu carrinho está vazio");
-      return;
+    function toggleCart() {
+      const cartEl = document.getElementById("cart");
+      const overlay = document.getElementById("overlay");
+
+      cartEl.classList.toggle("toggle");
+      overlay.classList.toggle("active");
     }
 
-    /* redirecionar para a página de checkout */
-    window.location.href = "compra.html";
-  }
+    function saveCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
 
-  /* carregar ao abrir página */
-  renderCart();
+    function formatPrice(price) {
+      return price.toFixed(2).replace(".", ",");
+    }
 
-  /* sistema de pesquisa */
-  const campoPesquisa = document.getElementById("campo-pesquisa");
-  const listaProdutos = document.querySelector(".produtos");
-  const resultadoPesquisa = document.getElementById("resultado-pesquisa");
+    function addToCart(name, price, image) {
+      const existing = cart.find(item => item.name === name);
 
-  let tempoPesquisa;
-
-  campoPesquisa.addEventListener("input", function () {
-      clearTimeout(tempoPesquisa);
-
-      const pesquisa = this.value.trim();
-
-      tempoPesquisa = setTimeout(() => {
-        buscarProdutos(pesquisa);
-      }, 500);
-  });
-
-  async function buscarProdutos(pesquisa = "") {
-    try {
-      const resposta = await fetch("buscar_produtos.php?pesquisa=" + encodeURIComponent(pesquisa));
-
-      if (!resposta.ok) {
-        throw new Error("Erro na comunicação com o servidor");
+      if (existing) {
+        existing.quantity++;
+      } else {
+        cart.push({ name, price, image, quantity: 1 });
       }
 
-      const produtos = await resposta.json();
+      saveCart();
+      renderCart();
+      openCart(); /* abre o carrinho automaticamente quando adicionar um item a ele*/
+    }
 
-      listaProdutos.innerHTML = "";
+    function increaseQty(index) {
+      cart[index].quantity++;
+      saveCart();
+      renderCart();
+    }
 
-      if (produtos.length === 0) {
-        resultadoPesquisa.textContent = "Nenhum produto encontrado";
+    function decreaseQty(index) {
+      if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+      } else {
+        cart.splice(index, 1);
+      }
+      saveCart();
+      renderCart();
+    }
 
+    function removeItem(index) {
+      cart.splice(index, 1);
+      saveCart();
+      renderCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      saveCart();
+      renderCart();
+    }
+
+    function renderCart() {
+        const cartItems = document.getElementById("cart-items");
+        const totalEl = document.getElementById("total");
+
+        cartItems.innerHTML = "";
+        let total = 0;
+
+        cart.forEach((item, index) => {
+          const subtotal = item.price * item.quantity;
+          total += subtotal;
+
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <img src="${item.image}" class="item-img">
+        
+            <div class="item-info">
+              <span class="item-name">${item.name}</span>
+              <span class="item-price">R$ ${formatPrice(item.price)}</span>
+            </div>
+
+            <div class="item-controls">
+              <button onclick="decreaseQty(${index})">−</button>
+              <span>${item.quantity}</span>
+              <button onclick="increaseQty(${index})">+</button>
+            </div>
+
+            <div class="item-subtotal">
+              R$ ${formatPrice(subtotal)}
+            </div>
+
+            <button class="remove-btn" onclick="removeItem(${index})">✕</button>
+          `;
+          cartItems.appendChild(li);
+        });
+      
+      /* mostrar ou esconder botão "Finalizar compra" */
+      const checkoutBtn = document.getElementById("checkout-btn");
+      if (cart.length > 0) {
+        checkoutBtn.style.display = "block";
+      } else {
+        checkoutBtn.style.display = "none";
+      }
+
+      totalEl.innerText = "Total: R$" + formatPrice(total);
+    }
+
+    function goToCheckout() {
+      if (cart.length === 0) {
+        alert("Seu carrinho está vazio");
         return;
       }
 
-      resultadoPesquisa.textContent = `${produtos.length} produto(s) encontrado(s)`;
-
-      produtos.forEach(produto => {
-        const card = document.createElement("div");
-
-        card.className = "produto";
-
-        card.innerHTML = `
-          <img
-            src="${produto.pro_imagem}"
-            alt="${produto.pro_nome}"
-          >
-
-          <h3>${produto.pro_nome}</h3>
-
-          <p>
-            ${Number(produto.pro_preco).toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL"
-            })}
-          </p>
-
-          <button class="btn">
-            Comprar
-          </button>
-        `;
-
-        const botao = card.querySelector(".btn");
-
-        botao.addEventListener("click", () => {
-          addToCart(produto.pro_nome, Number(produto.pro_preco), produto.pro_imagem);
-        });
-
-        listaProdutos.appendChild(card);
-      });
-    } catch (erro) {
-      console.error(erro);
-      
-      resultadoPesquisa.textContent = "Não foi possível carregar os produtos";
+      /* redirecionar para a página de checkout */
+      window.location.href = "compra.html";
     }
-  }
 
-  buscarProdutos();
-</script>
+    /* carregar ao abrir página */
+    renderCart();
 
-<div class="copyright">
-  © 2026 AteliWeb - Todos os direitos reservados
-</div>
+    /* sistema de pesquisa */
+    const campoPesquisa = document.getElementById("campo-pesquisa");
+    const listaProdutos = document.querySelector(".produtos");
+    const resultadoPesquisa = document.getElementById("resultado-pesquisa");
 
+    let tempoPesquisa;
+
+    campoPesquisa.addEventListener("input", function () {
+        clearTimeout(tempoPesquisa);
+
+        const pesquisa = this.value.trim();
+
+        tempoPesquisa = setTimeout(() => {
+          buscarProdutos(pesquisa);
+        }, 500);
+    });
+
+    async function buscarProdutos(pesquisa = "") {
+      try {
+        const resposta = await fetch("buscar_produtos.php?pesquisa=" + encodeURIComponent(pesquisa));
+
+        if (!resposta.ok) {
+          throw new Error("Erro na comunicação com o servidor");
+        }
+
+        const produtos = await resposta.json();
+
+        listaProdutos.innerHTML = "";
+
+        if (produtos.length === 0) {
+          resultadoPesquisa.textContent = "Nenhum produto encontrado";
+
+          return;
+        }
+
+        resultadoPesquisa.textContent = `${produtos.length} produto(s) encontrado(s)`;
+
+        produtos.forEach(produto => {
+          const card = document.createElement("div");
+
+          card.className = "produto";
+
+          card.innerHTML = `
+            <img
+              src="${produto.pro_imagem}"
+              alt="${produto.pro_nome}"
+            >
+
+            <h3>${produto.pro_nome}</h3>
+
+            <p>
+              ${Number(produto.pro_preco).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+              })}
+            </p>
+
+            <button class="btn">
+              Comprar
+            </button>
+          `;
+
+          const botao = card.querySelector(".btn");
+
+          botao.addEventListener("click", () => {
+            addToCart(produto.pro_nome, Number(produto.pro_preco), produto.pro_imagem);
+          });
+
+          listaProdutos.appendChild(card);
+        });
+      } catch (erro) {
+        console.error(erro);
+        
+        resultadoPesquisa.textContent = "Não foi possível carregar os produtos";
+      }
+    }
+
+    buscarProdutos();
+  </script>
+  <div class="copyright">
+    © 2026 AteliWeb - Todos os direitos reservados
+  </div>
 </body>
 </html>
