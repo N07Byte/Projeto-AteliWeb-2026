@@ -5,7 +5,6 @@ header('Content-Type: application/json; charset=utf-8');
 require_once("conecta.php");
 
 try {
-
     // 1. Verifica o método
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         throw new Exception('Método de requisição inválido');
@@ -52,7 +51,7 @@ try {
         $quantidade = intval($item['quantity'] ?? 0);
 
         if ($preco < 0 || $quantidade <= 0) {
-            throw new Exception('Item inválido no carrinho.');
+            throw new Exception('Item inválido no carrinho');
         }
 
         $subtotal = $preco * $quantidade;
@@ -60,8 +59,7 @@ try {
         $total += $subtotal;
     }
 
-    // 7. Insere a compra
-    // Agora também salvamos o JSON na coluna "itens"
+    // 7. Insere a compra no banco de dados e salva o JSON na coluna "itens"
     $sqlCompra = "INSERT INTO tbl_compras(nome, email, telefone, endereco, itens, total) VALUES(?, ?, ?, ?, ?, ?)";
 
     $stmtCompra = mysqli_prepare($conexao, $sqlCompra);
@@ -70,7 +68,7 @@ try {
         throw new Exception('Erro ao preparar a compra: ' . mysqli_error($conexao));
     }
 
-    /* * $itens continua sendo o JSON original recebido. Como a coluna do banco é JSON, o MySQL fará a validação */
+    // $itens continua sendo o JSON original recebido. Como a coluna do banco é JSON, o MySQL fará a validação
     mysqli_stmt_bind_param($stmtCompra, "sssssd", $nome, $email, $telefone, $endereco, $itens, $total);
 
     if (!mysqli_stmt_execute($stmtCompra)) {
@@ -83,7 +81,7 @@ try {
     mysqli_stmt_close($stmtCompra);
 
     // 8. Prepara o INSERT dos itens
-    $sqlItem = "INSERT INTO tbl_itens_compra(compra_id, produto, preco, quantidade, subtotal) VALUES (?, ?, ?, ?, ?)";
+    $sqlItem = "INSERT INTO tbl_itens_compra(compra_id, produto, preco, quantidade, subtotal) VALUES(?, ?, ?, ?, ?)";
 
     $stmtItem = mysqli_prepare($conexao, $sqlItem);
 

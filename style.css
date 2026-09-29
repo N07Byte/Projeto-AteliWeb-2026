@@ -25,7 +25,7 @@ h1, h2, h3 {
 }
 
 
-/* CABEÇALHO */
+/* Cabeçalho */
 
 header {
     background-color: #f7f5f2;
@@ -59,7 +59,7 @@ nav a:hover {
 }
 
 
-/* HERO */
+/* Hero */
 
 .hero {
     background:
@@ -85,7 +85,7 @@ nav a:hover {
 }
 
 
-/* SEÇÕES */
+/* Seções */
 
 .section {
     padding: 50px 20px;
@@ -93,7 +93,7 @@ nav a:hover {
 }
 
 
-/* BOTÕES */
+/* Botões */
 
 .btn {
     background-color: #a5511f;
@@ -120,7 +120,7 @@ nav a:hover {
 }
 
 
-/* PRODUTOS */
+/* Produtos */
 
 .produtos {
     display: grid;
@@ -159,7 +159,7 @@ nav a:hover {
 }
 
 
-/* FORMULÁRIOS */
+/* Formulários */
 
 form {
     display: flex;
@@ -190,7 +190,7 @@ textarea:focus {
 }
 
 
-/* PÁGINA CONTATO */
+/* Página Contato */
 
 .contato-box {
     max-width: 600px;
@@ -230,7 +230,7 @@ textarea {
 }
 
 
-/* PÁGINA SOBRE */
+/* Página Sobre */
 
 .sobre-section {
     max-width: 900px;
@@ -251,7 +251,7 @@ textarea {
 }
 
 
-/* PESQUISA */
+/* Pesquisa */
 
 .pesquisa {
     max-width: 600px;
@@ -287,7 +287,7 @@ textarea {
 }
 
 
-/* CARRINHO */
+/* Carrinho */
 
 .overlay {
     position: fixed;
@@ -434,7 +434,7 @@ textarea {
     display: none;
 }
 
-/* CHECKOUT */
+/* Checkout */
 
 .checkout-container {
     max-width: 900px;
@@ -481,7 +481,7 @@ textarea {
     margin-top: 10px;
 }
 
-/* RODAPÉ / COPYRIGHT */
+/* rodapé / copyright */
 
 .copyright {
     position: fixed;

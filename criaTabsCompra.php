@@ -2,20 +2,20 @@
 
 $dbnome = "bd_ateliweb";
 $conexao = mysqli_connect('localhost', 'root', '') or die("Erro de conexão");
+$criadb = mysqli_query($conexao, "CREATE DATABASE IF NOT EXISTS $dbnome");
+$abre = mysqli_query($conexao, "USE $dbnome");
 
-mysqli_query($conexao, "CREATE DATABASE IF NOT EXISTS $dbnome");
-mysqli_query($conexao, "USE $dbnome");
+$tbNome1 = "tbl_compras";
+$tbNome2 = "tbl_itens_compra";
 
-/* Primeiro apaga-se a tabela FILHA. Ela possui uma FK apontando para tbl_compras */
-mysqli_query($conexao, "DROP TABLE IF EXISTS tbl_itens_compra");
+// Primeiro apaga-se a tabela filha. Ela possui uma Foreign Key apontando para tbl_compras
+mysqli_query($conexao, "DROP TABLE IF EXISTS $tbNome2");
 
-/* Depois podemos apagar a tabela PAI */
-mysqli_query($conexao, "DROP TABLE IF EXISTS tbl_compras");
+// Apenas depois pode apagar a tabela pai
+mysqli_query($conexao, "DROP TABLE IF EXISTS $tbNome1");
 
-
-/* Cria tbl_compras*/
-
-$sqlCompras = "CREATE TABLE tbl_compras (
+// Cria tbl_compras
+$sqlCompras = "CREATE TABLE $tbNome1 (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
     email VARCHAR(150) NOT NULL,
@@ -27,15 +27,14 @@ $sqlCompras = "CREATE TABLE tbl_compras (
 )";
 
 if (mysqli_query($conexao, $sqlCompras)) {
-    echo "Tabela tbl_compras criada com sucesso<br>";
+    echo "Tabela $tbNome1 criada com sucesso<br>";
 } else {
-    echo "Erro ao criar tbl_compras: " . mysqli_error($conexao) . "<br>";
+    echo "Erro ao criar $tbNome1: " . mysqli_error($conexao) . "<br>";
 }
 
 
-/* CRIA tbl_itens_compra */
-
-$sqlItens = "CREATE TABLE tbl_itens_compra (
+// Cria tbl_itens_compra
+$sqlItens = "CREATE TABLE $tbNome2 (
     id INT AUTO_INCREMENT PRIMARY KEY,
     compra_id INT NOT NULL,
     produto VARCHAR(150) NOT NULL,
@@ -44,15 +43,15 @@ $sqlItens = "CREATE TABLE tbl_itens_compra (
     subtotal DECIMAL(10,2) NOT NULL,
     CONSTRAINT fk_itens_compra
         FOREIGN KEY (compra_id)
-        REFERENCES tbl_compras(id)
+        REFERENCES $tbNome1(id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 )";
 
 if (mysqli_query($conexao, $sqlItens)) {
-    echo "Tabela tbl_itens_compra criada com sucesso<br>";
+    echo "Tabela $tbNome2 criada com sucesso<br>";
 } else {
-    echo "Erro ao criar tbl_itens_compra: " . mysqli_error($conexao) . "<br>";
+    echo "Erro ao criar $tbNome2: " . mysqli_error($conexao) . "<br>";
 }
 
 mysqli_close($conexao);

@@ -41,34 +41,21 @@ if (mail($destinatario, $assunto, $corpo, $headers)) {
     <!DOCTYPE html>
     <html lang='pt-br'>
     <head>
-        <meta charset='UTF-8'>
-        <title>Mensagem enviada</title>
+        <meta charset='utf-8'>
+        <title>Mensagem Enviada</title>
     </head>
 
-    <body style='
-        background:#f7f5f2;
-        font-family:Lora, serif;
-        text-align:center;
-        padding:80px 20px;
-    '>
-
+    <body style='style.css'>
         <p style = 'margin:20px;'>
             Obrigado pelo contato, $nome. Retornaremos assim que possível!
         </p>
 
         <a
             href = 'contato.html'
-            style = '
-                color:white;
-                background:#a5511f;
-                padding:10px 20px;
-                border-radius:6px;
-                text-decoration:none;
-            '
+            style = 'style.css'
         >
             Voltar
         </a>
-
     </body>
     </html>
     ";

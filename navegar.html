@@ -78,7 +78,7 @@
 
       saveCart();
       renderCart();
-      openCart(); /* abre o carrinho automaticamente quando adicionar um item a ele*/
+      openCart(); // Abre o carrinho automaticamente quando adicionar um item a ele
     }
 
     function increaseQty(index) {
@@ -144,7 +144,7 @@
           cartItems.appendChild(li);
         });
       
-      /* mostrar ou esconder botão "Finalizar compra" */
+      // Mostrar ou esconder botão "Finalizar compra"
       const checkoutBtn = document.getElementById("checkout-btn");
       if (cart.length > 0) {
         checkoutBtn.style.display = "block";
@@ -161,7 +161,7 @@
         return;
       }
 
-      /* redirecionar para a página de checkout */
+      // Redirecionar para a página de checkout
       window.location.href = "compra.html";
     }
 
