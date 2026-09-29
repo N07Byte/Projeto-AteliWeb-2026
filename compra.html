@@ -64,20 +64,18 @@
 	            `;
 
 	            cartItemsDiv.appendChild(div);
-
 	        });
 
-	        totalDiv.innerText = "Total: R$" + formatPrice(total);
+	        totalDiv.innerText = "Total: R$ " + formatPrice(total);
 	    }
 
 	    renderCart();
 
 	    document.getElementById("checkout-form").addEventListener("submit", async function(e){
-
 	        e.preventDefault();
 
 	        if(cart.length === 0){
-	            alert("Seu carrinho está vazio");
+	            alert("Seu carrinho está vazio.");
 	            return;
 	        }
 
@@ -110,8 +108,9 @@
 
 	            const resultado = await resposta.json();
 
-
 	            if(resultado.sucesso){
+	                alert(resultado.mensagem);
+
 	                // Limpa o carrinho somente depois de salvar no banco
 	                localStorage.removeItem("cart");
 
@@ -121,9 +120,9 @@
 
 	            }
 	        } catch(erro) {
-	            console.error("Erro: ", erro);
+	            console.error("Erro:", erro);
 
-	            alert("Não foi possível enviar o pedido. " + "Verifique sua conexão e tente novamente");
+	            alert("Verifique sua conexão e tente novamente" + "\nNão foi possível enviar o pedido");
 	        }
 	    });
 	</script>

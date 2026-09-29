@@ -122,7 +122,7 @@ try {
     mysqli_commit($conexao);
 
     // 11. Retorna sucesso
-    echo json_encode(['sucesso' => true, 'mensagem' => 'Pedido enviado com sucesso!', 'id' => $compraId]);
+    echo json_encode(['sucesso' => true, 'mensagem' => 'Pedido enviado com sucesso!']);
 
 } catch (Exception $e) {
     // Se alguma coisa der errado, desfaz tudo
